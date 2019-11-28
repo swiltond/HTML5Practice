@@ -1,0 +1,63 @@
+<div class="container marginTop25">
+
+    <div class="marginBottom20">
+        <mat-accordion>
+            <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Find and Edit
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+
+                <div class="col-md-4 col-12 marginTop25">
+                    <mat-form-field class="form-fields">
+                        <input type="number" matInput placeholder="Employee ID" id="findEmpID" #empIDRef>
+                    </mat-form-field>
+                </div>
+                <div class="col-12 marginTop25">
+                    <button type="button" mat-raised-button color="primary" (click)="findEmp(empIDRef)">Search</button>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+
+    <mat-card>
+        <mat-card-content>
+            <div align="center">
+                <div class="edit-head">Edit Employee</div>
+            </div>
+
+            <form class="row" [formGroup]="empEditForm" autocomplete="off" novalidate>
+                <div class="col-md-4 col-12">
+                    <mat-form-field class="form-fields">
+                        <input matInput placeholder="Employee ID" id="empID" formControlName="empIDControl">
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-12">
+                    <mat-form-field class="form-fields">
+                        <input matInput placeholder="Name" id="empName" formControlName="empNameControl" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="hasError('empNameControl', 'required')">Please enter your name</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-12">
+                    <mat-form-field class="form-fields">
+                        <input type="number" matInput placeholder="Age" id="empAge" formControlName="empAgeControl" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="hasError('empAgeControl', 'required')">Please enter your age</mat-error>
+                        <mat-error *ngIf="hasError('empAgeControl', 'min')">Minimum Age should be 1</mat-error>
+                        <mat-error *ngIf="hasError('empAgeControl', 'max')">Maximum Age should be 100</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="col-md-4 col-12">
+                    <mat-form-field class="form-fields">
+                        <input type="number" matInput placeholder="Salary" id="empSalary" formControlName="empSalaryControl" [errorStateMatcher]="matcher">
+                        <mat-error *ngIf="hasError('empSalaryControl', 'required')">Please enter your salary</mat-error>
+                    </mat-form-field>
+                </div>
+            </form>
+        </mat-card-content>
+        <mat-card-actions align="end">
+            <button mat-button routerLink="/">BACK</button>
+            <button mat-button [disabled]="(!empEditForm.valid) || (!empEditForm.dirty)" (click)="updateEmp(employee.id)">UPDATE</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
